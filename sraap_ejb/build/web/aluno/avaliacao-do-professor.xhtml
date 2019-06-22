@@ -1,0 +1,388 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+
+        <title>Sraap - avaliação do professor</title>
+
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css" />
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css" />
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css" />
+        <link rel="stylesheet" href="./assets/css/cs-skin-elastic.css" />
+        <link rel="stylesheet"
+              href="./assets/css/lib/datatable/dataTables.bootstrap.min.css" />
+        <link rel="stylesheet" href="./assets/css/style.css" />
+        <link rel="shortcut icon" type="image/x-icon" href="./assets/images/favicon.ico"/>
+
+        <link
+            href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
+            rel='stylesheet' type='text/css' />
+
+    </h:head>
+    <h:body>
+        <!-- Left Panel -->
+        <aside id="left-panel" class="left-panel">
+            <nav class="navbar navbar-expand-sm navbar-default">
+
+                <div id="main-menu" class="main-menu collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Consultas</a>
+                            <ul class="sub-menu children dropdown-menu">                            
+                                <li><i class="fa fa-table"></i><a href="./lista-turmas.xhtml">Turmas</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Configurações</a>
+                            <ul class="sub-menu children dropdown-menu"> 
+                                <li><i class="fa fa-id-card-o"></i><a href="./editar-perfil.xhtml">Editar Perfil</a></li>
+                                <li><i class="fa fa-power-off"></i><a href="">Sair</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </nav>
+        </aside><!-- /#left-panel -->
+
+        <!-- Left Panel -->
+
+        <!-- Right Panel -->
+
+        <div id="right-panel" class="right-panel">
+
+            <!-- Header-->
+            <header id="header" class="header">
+                <div class="top-left">
+                    <div class="navbar-header">
+                        <a class="navbar-brand"><img src="./assets/images/logo.ico" alt="Logo"/></a>
+                        <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"/></a>
+                        <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                </div>
+            </header><!-- /header -->
+            <!-- Header-->
+
+            <div class="breadcrumbs">
+                <div class="breadcrumbs-inner">
+                    <div class="row m-0">
+                        <div class="col-sm-4">
+                            <div class="page-header float-left">
+                                <div class="page-title">
+                                    <a href="./home.xhtml"><h1>Home</h1></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content" >
+                <div class="animated fadeIn">
+
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header" align="center">Avaliar professor</div>
+                            <div class="card-body card-block">
+                                <h:form>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-font"></i></div>
+                                            <h:inputText id="turma" class="form-control" value="#{avaliacaoDoProfessorController.selected.idTurma}" title="#{bundle.CreateAvaliacaoDoProfessorTitle_idTurma}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_idTurma}">
+                                                <f:passThroughAttribute name="placeholder" value="ID da turma" />
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="1. DOMÍNIO DE CONTEÚDO: durante as aulas o(a) professor(a)
+                                                demonstra conhecer com profundidade os conteúdos
+                                                trabalhados na disciplina." />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating value="#{avaliacaoDoProfessorController.selected.conceito1}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito1}" />
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="2. CLAREZA NA EXPOSIÇÃO: o(a) professor(a) expõe com clareza
+                                                os assuntos estudados em sala de aula, facilitando a
+                                                compreensão por parte dos discentes."/> 
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating value="#{avaliacaoDoProfessorController.selected.conceito2}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito2}" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="3. PLANEJAMENTO E EXECUÇÃO: existe coerência entre o
+                                                planejamento feito pelo professor (plano de atividades,
+                                                bibliografia indicada) e as aulas ministradas." />
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating  value="#{avaliacaoDoProfessorController.selected.conceito3}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito3}"/>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="4. ORGANIZAÇÃO: o(a) professor(a) demonstra ter preparado a
+                                                aula com antecedência." />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating  value="#{avaliacaoDoProfessorController.selected.conceito4}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito4}"/>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="5. ORGANIZAÇÃO: o(a) professor(a) procura tornar a aula atrativa." />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating  value="#{avaliacaoDoProfessorController.selected.conceito5}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito5}"/>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="6. RECURSOS DIDÁTICOS: o(a) professor(a) utiliza diversos
+                                                recursos e instrumentos de ensino (projetores multimídia,
+                                                debates, estudo em grupos, filmes, aulas práticas, dinâmicas de
+                                                grupo, entre outros)." />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating value="#{avaliacaoDoProfessorController.selected.conceito6}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito6}" />
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="7. CONDUÇÃO DA AULA: o(a) professor(a) conduz a aula de
+                                                maneira adequada, de maneira a evitar dispersão dos discentes
+                                                em conversas paralelas ou outras irregularidades que
+                                                prejudiquem o processo de ensino-aprendizagem." />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating value="#{avaliacaoDoProfessorController.selected.conceito7}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito7}" />
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="8. RELACIONAMENTO INTERPESSOAL: o(a) professor(a) dá
+                                                espaço para o esclarecimento de dúvidas." />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating  value="#{avaliacaoDoProfessorController.selected.conceito8}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito8}"/>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="9. RELACIONAMENTO INTERPESSOAL: o(a) professor(a)
+                                                estabelece um bom relacionamento com os discentes, dando
+                                                espaço para o diálogo." />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating  value="#{avaliacaoDoProfessorController.selected.conceito9}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito9}"/>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="10. AVALIAÇÃO: a avaliação é compatível com os conteúdos
+                                                ministrados em sala de aula." />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating  value="#{avaliacaoDoProfessorController.selected.conceito10}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito10}"/>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="11. CUMPRIMENTO DE PRAZOS: o(a) professor(a) divulga os
+                                                resultados das avaliações nos prazos informados." />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating  value="#{avaliacaoDoProfessorController.selected.conceito11}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito11}"/>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+
+                                            <h:outputText
+                                                value="12. PONTUALIDADE: o(a) professor(a) é pontual, cumprindo o
+                                                horário de início e encerramento das aulas." />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <p:rating value="#{avaliacaoDoProfessorController.selected.conceito12}" required="true" requiredMessage="#{bundle.CreateAvaliacaoDoProfessorRequiredMessage_conceito12}" />
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+
+                                    <div class="form-actions form-group" align="center">
+                                        <h:commandLink class="btn btn-success btn-sm" action="#{avaliacaoDoProfessorController.create}" value="#{bundle.CreateAvaliacaoDoProfessorSaveLink}" >
+                                            <i class="fa fa-save"></i>
+                                        </h:commandLink>
+
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <!-- .animated -->
+
+
+            <div class="clearfix"></div>
+
+            <footer class="site-footer">
+                <div class="footer-inner bg-white">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            Copyright <i class="fa fa-copyright" aria-hidden="true"></i>2019
+                            SRAAP
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            Designed by <a href="https://colorlib.com">Colorlib</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /#right-panel -->
+
+        <!-- Right Panel -->
+
+        <!-- Scripts -->
+        <script
+        src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+        <script
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+        <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+        <script
+        src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+        <script src="./assets/js/main.js"></script>
+
+    </h:body>
+
+</html>
+
+
