@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.upe.sraap.session;
+package br.upe.sraap.percistence;
 
-import br.upe.sraap.entities.Professor;
+import br.upe.sraap.entities.AvaliacaoDoProfessor;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author matheus
  */
 @Stateless
-public class ProfessorFacade extends AbstractFacade<Professor> {
+public class AvaliacaoDoProfessorFacade extends AbstractFacade<AvaliacaoDoProfessor> {
 
     @PersistenceContext(unitName = "sraap_ejbPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class ProfessorFacade extends AbstractFacade<Professor> {
         return em;
     }
 
-    public ProfessorFacade() {
-        super(Professor.class);
+    public AvaliacaoDoProfessorFacade() {
+        super(AvaliacaoDoProfessor.class);
     }
     
 }

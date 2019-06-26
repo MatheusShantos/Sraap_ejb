@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.upe.sraap.session;
+package br.upe.sraap.percistence;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -60,5 +60,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

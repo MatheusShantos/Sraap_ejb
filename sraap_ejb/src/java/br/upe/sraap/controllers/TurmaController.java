@@ -1,9 +1,9 @@
-package br.upe.sraap.jsf;
+package br.upe.sraap.controllers;
 
-import br.upe.sraap.entities.AvaliacaoDoProfessor;
-import br.upe.sraap.jsf.util.JsfUtil;
-import br.upe.sraap.jsf.util.PaginationHelper;
-import br.upe.sraap.session.AvaliacaoDoProfessorFacade;
+import br.upe.sraap.entities.Turma;
+import br.upe.sraap.controllers.util.JsfUtil;
+import br.upe.sraap.controllers.util.PaginationHelper;
+import br.upe.sraap.percistence.TurmaFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("avaliacaoDoProfessorController")
+@Named("turmaController")
 @SessionScoped
-public class AvaliacaoDoProfessorController implements Serializable {
+public class TurmaController implements Serializable {
 
-    private AvaliacaoDoProfessor current;
+    private Turma current;
     private DataModel items = null;
     @EJB
-    private br.upe.sraap.session.AvaliacaoDoProfessorFacade ejbFacade;
+    private br.upe.sraap.percistence.TurmaFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public AvaliacaoDoProfessorController() {
+    public TurmaController() {
     }
 
-    public AvaliacaoDoProfessor getSelected() {
+    public Turma getSelected() {
         if (current == null) {
-            current = new AvaliacaoDoProfessor();
+            current = new Turma();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private AvaliacaoDoProfessorFacade getFacade() {
+    private TurmaFacade getFacade() {
         return ejbFacade;
     }
 
@@ -64,25 +64,25 @@ public class AvaliacaoDoProfessorController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "List";
+        return "lista-turmas";
     }
 
     public String prepareView() {
-        current = (AvaliacaoDoProfessor) getItems().getRowData();
+        current = (Turma) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        return "lista-turmas";
     }
 
     public String prepareCreate() {
-        current = new AvaliacaoDoProfessor();
+        current = new Turma();
         selectedItemIndex = -1;
-        return "Create";
+        return "nova-turma";
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AvaliacaoDoProfessorCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("TurmaCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -91,15 +91,15 @@ public class AvaliacaoDoProfessorController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (AvaliacaoDoProfessor) getItems().getRowData();
+        current = (Turma) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return "editar-turma";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AvaliacaoDoProfessorUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("TurmaUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -108,12 +108,12 @@ public class AvaliacaoDoProfessorController implements Serializable {
     }
 
     public String destroy() {
-        current = (AvaliacaoDoProfessor) getItems().getRowData();
+        current = (Turma) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "List";
+        return "lista-turmas";
     }
 
     public String destroyAndView() {
@@ -125,14 +125,14 @@ public class AvaliacaoDoProfessorController implements Serializable {
         } else {
             // all items were removed - go back to list
             recreateModel();
-            return "List";
+            return "lista-turmas";
         }
     }
 
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AvaliacaoDoProfessorDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("TurmaDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -171,13 +171,13 @@ public class AvaliacaoDoProfessorController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "List";
+        return "lista-turmas";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "List";
+        return "lista-turmas";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
@@ -188,21 +188,21 @@ public class AvaliacaoDoProfessorController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public AvaliacaoDoProfessor getAvaliacaoDoProfessor(java.lang.Long id) {
+    public Turma getTurma(java.lang.Long id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = AvaliacaoDoProfessor.class)
-    public static class AvaliacaoDoProfessorControllerConverter implements Converter {
+    @FacesConverter(forClass = Turma.class)
+    public static class TurmaControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            AvaliacaoDoProfessorController controller = (AvaliacaoDoProfessorController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "avaliacaoDoProfessorController");
-            return controller.getAvaliacaoDoProfessor(getKey(value));
+            TurmaController controller = (TurmaController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "turmaController");
+            return controller.getTurma(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -222,11 +222,11 @@ public class AvaliacaoDoProfessorController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof AvaliacaoDoProfessor) {
-                AvaliacaoDoProfessor o = (AvaliacaoDoProfessor) object;
+            if (object instanceof Turma) {
+                Turma o = (Turma) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + AvaliacaoDoProfessor.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Turma.class.getName());
             }
         }
 

@@ -1,9 +1,9 @@
-package br.upe.sraap.jsf;
+package br.upe.sraap.controllers;
 
-import br.upe.sraap.entities.Aluno;
-import br.upe.sraap.jsf.util.JsfUtil;
-import br.upe.sraap.jsf.util.PaginationHelper;
-import br.upe.sraap.session.AlunoFacade;
+import br.upe.sraap.entities.AvaliacaoDoProfessor;
+import br.upe.sraap.controllers.util.JsfUtil;
+import br.upe.sraap.controllers.util.PaginationHelper;
+import br.upe.sraap.percistence.AvaliacaoDoProfessorFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("alunoController")
+@Named("avaliacaoDoProfessorController")
 @SessionScoped
-public class AlunoController implements Serializable {
+public class AvaliacaoDoProfessorController implements Serializable {
 
-    private Aluno current;
+    private AvaliacaoDoProfessor current;
     private DataModel items = null;
     @EJB
-    private br.upe.sraap.session.AlunoFacade ejbFacade;
+    private br.upe.sraap.percistence.AvaliacaoDoProfessorFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public AlunoController() {
+    public AvaliacaoDoProfessorController() {
     }
 
-    public Aluno getSelected() {
+    public AvaliacaoDoProfessor getSelected() {
         if (current == null) {
-            current = new Aluno();
+            current = new AvaliacaoDoProfessor();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private AlunoFacade getFacade() {
+    private AvaliacaoDoProfessorFacade getFacade() {
         return ejbFacade;
     }
 
@@ -64,25 +64,25 @@ public class AlunoController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "lista-alunos";
+        return "List";
     }
 
     public String prepareView() {
-        current = (Aluno) getItems().getRowData();
+        current = (AvaliacaoDoProfessor) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "visualizar-aluno";
+        return "View";
     }
 
     public String prepareCreate() {
-        current = new Aluno();
+        current = new AvaliacaoDoProfessor();
         selectedItemIndex = -1;
-        return "novo-aluno";
+        return "Create";
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AlunoCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AvaliacaoDoProfessorCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -91,16 +91,16 @@ public class AlunoController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Aluno) getItems().getRowData();
+        current = (AvaliacaoDoProfessor) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "editar-aluno";
+        return "Edit";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AlunoUpdated"));
-            return "visualizar-aluno";
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AvaliacaoDoProfessorUpdated"));
+            return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -108,12 +108,12 @@ public class AlunoController implements Serializable {
     }
 
     public String destroy() {
-        current = (Aluno) getItems().getRowData();
+        current = (AvaliacaoDoProfessor) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "lista-alunos";
+        return "List";
     }
 
     public String destroyAndView() {
@@ -121,18 +121,18 @@ public class AlunoController implements Serializable {
         recreateModel();
         updateCurrentItem();
         if (selectedItemIndex >= 0) {
-            return "visualizar-aluno";
+            return "View";
         } else {
             // all items were removed - go back to list
             recreateModel();
-            return "lista-alunos";
+            return "List";
         }
     }
 
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AlunoDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AvaliacaoDoProfessorDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -171,13 +171,13 @@ public class AlunoController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "lista-alunos";
+        return "List";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "lista-alunos";
+        return "List";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
@@ -188,21 +188,21 @@ public class AlunoController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Aluno getAluno(java.lang.Long id) {
+    public AvaliacaoDoProfessor getAvaliacaoDoProfessor(java.lang.Long id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Aluno.class)
-    public static class AlunoControllerConverter implements Converter {
+    @FacesConverter(forClass = AvaliacaoDoProfessor.class)
+    public static class AvaliacaoDoProfessorControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            AlunoController controller = (AlunoController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "alunoController");
-            return controller.getAluno(getKey(value));
+            AvaliacaoDoProfessorController controller = (AvaliacaoDoProfessorController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "avaliacaoDoProfessorController");
+            return controller.getAvaliacaoDoProfessor(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -222,11 +222,11 @@ public class AlunoController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Aluno) {
-                Aluno o = (Aluno) object;
+            if (object instanceof AvaliacaoDoProfessor) {
+                AvaliacaoDoProfessor o = (AvaliacaoDoProfessor) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Aluno.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + AvaliacaoDoProfessor.class.getName());
             }
         }
 

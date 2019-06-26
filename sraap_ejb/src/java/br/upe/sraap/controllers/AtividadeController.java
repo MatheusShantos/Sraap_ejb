@@ -1,9 +1,9 @@
-package br.upe.sraap.jsf;
+package br.upe.sraap.controllers;
 
-import br.upe.sraap.entities.Professor;
-import br.upe.sraap.jsf.util.JsfUtil;
-import br.upe.sraap.jsf.util.PaginationHelper;
-import br.upe.sraap.session.ProfessorFacade;
+import br.upe.sraap.entities.Atividade;
+import br.upe.sraap.controllers.util.JsfUtil;
+import br.upe.sraap.controllers.util.PaginationHelper;
+import br.upe.sraap.percistence.AtividadeFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("professorController")
+@Named("atividadeController")
 @SessionScoped
-public class ProfessorController implements Serializable {
+public class AtividadeController implements Serializable {
 
-    private Professor current;
+    private Atividade current;
     private DataModel items = null;
     @EJB
-    private br.upe.sraap.session.ProfessorFacade ejbFacade;
+    private br.upe.sraap.percistence.AtividadeFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public ProfessorController() {
+    public AtividadeController() {
     }
 
-    public Professor getSelected() {
+    public Atividade getSelected() {
         if (current == null) {
-            current = new Professor();
+            current = new Atividade();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private ProfessorFacade getFacade() {
+    private AtividadeFacade getFacade() {
         return ejbFacade;
     }
 
@@ -64,25 +64,25 @@ public class ProfessorController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "lista-professores";
+        return "lista-atividades";
     }
 
     public String prepareView() {
-        current = (Professor) getItems().getRowData();
+        current = (Atividade) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "visualizar-professor";
+        return "View";
     }
 
     public String prepareCreate() {
-        current = new Professor();
+        current = new Atividade();
         selectedItemIndex = -1;
-        return "novo-professor";
+        return "nova-atividade";
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ProfessorCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AtividadeCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -91,16 +91,16 @@ public class ProfessorController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Professor) getItems().getRowData();
+        current = (Atividade) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "editar-professor";
+        return "editar-atividade";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ProfessorUpdated"));
-            return "visualizar-professor";
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AtividadeUpdated"));
+            return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -108,12 +108,12 @@ public class ProfessorController implements Serializable {
     }
 
     public String destroy() {
-        current = (Professor) getItems().getRowData();
+        current = (Atividade) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "lista-professores";
+        return "lista-atividades";
     }
 
     public String destroyAndView() {
@@ -121,18 +121,18 @@ public class ProfessorController implements Serializable {
         recreateModel();
         updateCurrentItem();
         if (selectedItemIndex >= 0) {
-            return "visualizar-professor";
+            return "View";
         } else {
             // all items were removed - go back to list
             recreateModel();
-            return "lista-professores";
+            return "lista-atividades";
         }
     }
 
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ProfessorDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AtividadeDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -171,13 +171,13 @@ public class ProfessorController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "lista-professores";
+        return "lista-atividades";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "lista-professores";
+        return "lista-atividades";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
@@ -188,21 +188,21 @@ public class ProfessorController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Professor getProfessor(java.lang.Long id) {
+    public Atividade getAtividade(java.lang.Long id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Professor.class)
-    public static class ProfessorControllerConverter implements Converter {
+    @FacesConverter(forClass = Atividade.class)
+    public static class AtividadeControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ProfessorController controller = (ProfessorController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "professorController");
-            return controller.getProfessor(getKey(value));
+            AtividadeController controller = (AtividadeController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "atividadeController");
+            return controller.getAtividade(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -222,11 +222,11 @@ public class ProfessorController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Professor) {
-                Professor o = (Professor) object;
+            if (object instanceof Atividade) {
+                Atividade o = (Atividade) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Professor.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Atividade.class.getName());
             }
         }
 

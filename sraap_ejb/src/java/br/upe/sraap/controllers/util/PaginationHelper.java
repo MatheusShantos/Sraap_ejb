@@ -1,4 +1,4 @@
-package br.upe.sraap.jsf.util;
+package br.upe.sraap.controllers.util;
 
 import javax.faces.model.DataModel;
 

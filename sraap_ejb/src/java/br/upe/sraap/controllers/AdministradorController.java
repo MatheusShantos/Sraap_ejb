@@ -1,9 +1,9 @@
-package br.upe.sraap.jsf;
+package br.upe.sraap.controllers;
 
 import br.upe.sraap.entities.Administrador;
-import br.upe.sraap.jsf.util.JsfUtil;
-import br.upe.sraap.jsf.util.PaginationHelper;
-import br.upe.sraap.session.AdministradorFacade;
+import br.upe.sraap.controllers.util.JsfUtil;
+import br.upe.sraap.controllers.util.PaginationHelper;
+import br.upe.sraap.percistence.AdministradorFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -25,7 +25,7 @@ public class AdministradorController implements Serializable {
     private Administrador current;
     private DataModel items = null;
     @EJB
-    private br.upe.sraap.session.AdministradorFacade ejbFacade;
+    private br.upe.sraap.percistence.AdministradorFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
