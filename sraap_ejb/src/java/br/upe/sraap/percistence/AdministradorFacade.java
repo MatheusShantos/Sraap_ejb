@@ -23,9 +23,6 @@ public class AdministradorFacade extends AbstractFacade<Administrador> {
     @PersistenceContext(unitName = "sraap_ejbPU")
     private EntityManager em;
 
-    private EntityManagerFactory factory = Persistence
-            .createEntityManagerFactory("administradores");
-
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -33,20 +30,5 @@ public class AdministradorFacade extends AbstractFacade<Administrador> {
 
     public AdministradorFacade() {
         super(Administrador.class);
-    }
-
-    public Administrador getUsuario(String email, String senha) {
-
-        try {
-            Administrador adm = (Administrador) em
-                    .createQuery(
-                            "SELECT a FROM Administrador a WHERE a.senha = :senha AND a.email = :email")
-                    .setParameter("name", email)
-                    .setParameter("senha", senha).getSingleResult();
-
-            return adm;
-        } catch (NoResultException e) {
-            return null;
-        }
     }
 }

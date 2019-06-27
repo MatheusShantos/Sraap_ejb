@@ -111,18 +111,7 @@
                                                 <h:commandLink action="#{atividadeController.previous}" value="#{bundle.Previous} #{atividadeController.pagination.pageSize}" rendered="#{atividadeController.pagination.hasPreviousPage}"/>&nbsp;
                                                 <h:commandLink action="#{atividadeController.next}" value="#{bundle.Next} #{atividadeController.pagination.pageSize}" rendered="#{atividadeController.pagination.hasNextPage}"/>&nbsp;
                                                 <h:dataTable value="#{atividadeController.items}" var="item" class="table table-striped">
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="#{bundle.ListAtividadeTitle_id}"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.id}"/>
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="#{bundle.ListAtividadeTitle_idTurma}"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.idTurma}"/>
-                                                    </h:column>
+
                                                     <h:column>
                                                         <f:facet name="header">
                                                             <h:outputText value="#{bundle.ListAtividadeTitle_titulo}"/>
@@ -134,12 +123,6 @@
                                                             <h:outputText value="#{bundle.ListAtividadeTitle_link}"/>
                                                         </f:facet>
                                                         <h:outputText value="#{item.link}"/>
-                                                    </h:column>
-                                                    <h:column>
-                                                        <f:facet name="header">
-                                                            <h:outputText value="#{bundle.ListAtividadeTitle_descricao}"/>
-                                                        </f:facet>
-                                                        <h:outputText value="#{item.descricao}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">
